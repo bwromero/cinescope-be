@@ -1,0 +1,181 @@
+================================================================================
+                         CINESCOPE MVP - PROJECT SPECIFICATION
+================================================================================
+
+CORE PURPOSE
+------------
+A movie discovery app where users can browse, search, and save movies to a 
+personal watchlist.
+
+
+================================================================================
+                              USER STORIES
+================================================================================
+
+#   FEATURE              DESCRIPTION
+------------------------------------------------------------------------------
+1   Browse Trending      See what's popular this week
+2   Browse by Genre      Filter movies by Action, Comedy, Horror, etc.
+3   Search Movies        Find any movie by title
+4   View Details         See synopsis, rating, cast, trailer, similar movies
+5   Save to Watchlist    Add/remove movies from personal list
+6   View Watchlist       See all saved movies
+
+
+================================================================================
+                           ARCHITECTURE OVERVIEW
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           FRONTEND (Angular)                                 │
+│  • Home (trending/popular)                                                  │
+│  • Browse (by genre)                                                        │
+│  • Search results                                                           │
+│  • Movie details                                                            │
+│  • Watchlist                                                                │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │ HTTP/REST
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          BACKEND (Spring Boot)                               │
+│  /api/movies/trending                                                       │
+│  /api/movies/popular                                                        │
+│  /api/movies/search?query=                                                  │
+│  /api/movies/{id}                                                           │
+│  /api/movies/discover?genre=                                                │
+│  /api/genres                                                                │
+│  /api/watchlist (CRUD)                                                      │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                    ┌────────────┴────────────┐
+                    ▼                         ▼
+              ┌──────────┐             ┌──────────────┐
+              │  TMDB    │             │   Database   │
+              │   API    │             │ (Watchlist)  │
+              └──────────┘             └──────────────┘
+
+
+================================================================================
+                         BACKEND ENDPOINTS (Spring Boot)
+================================================================================
+
+MOVIES (from TMDB)
+------------------
+GET  /api/movies/trending              → Trending this week
+GET  /api/movies/popular?page=1        → Popular movies (paginated)
+GET  /api/movies/search?query=batman   → Search by title
+GET  /api/movies/{id}                  → Movie details
+GET  /api/genres                       → All genres
+
+DISCOVER
+--------
+GET  /api/movies/discover?genre=28&year=2024&page=1
+
+WATCHLIST (uses database)
+-------------------------
+GET     /api/watchlist                 → Get user's watchlist
+POST    /api/watchlist                 → Add movie to watchlist
+DELETE  /api/watchlist/{movieId}       → Remove from watchlist
+
+
+================================================================================
+                          FRONTEND PAGES (Angular)
+================================================================================
+
+PAGE          ROUTE            FEATURES
+------------------------------------------------------------------------------
+Home          /                Hero banner, trending carousel, popular grid
+Browse        /browse          Genre filter, year filter, sortable grid
+Search        /search?q=       Search results with infinite scroll
+Movie         /movie/:id       Full details, cast, trailer, similar movies
+Watchlist     /watchlist       Saved movies grid
+
+
+================================================================================
+                         PORTFOLIO-WORTHY SKILLS
+================================================================================
+
+SKILL DEMONSTRATED           HOW
+------------------------------------------------------------------------------
+REST API Design              Clean endpoints, proper HTTP methods
+External API Integration     TMDB client with error handling
+Database Operations          Watchlist CRUD with JPA
+Caching                      Cache trending/genres (don't spam TMDB)
+Frontend Framework           Angular with SSR
+State Management             Signals for watchlist state
+Responsive Design            Mobile-first CSS
+Full-Stack Thinking          Backend + Frontend working together
+
+
+================================================================================
+                            SUGGESTED BUILD ORDER
+================================================================================
+
+Phase 1: Backend Core ✓
+  └── TMDB integration, basic endpoints
+
+Phase 2: Backend Watchlist
+  └── JPA entity, repository, controller
+
+Phase 3: Frontend Foundation
+  └── Routing, layout, movie card component
+
+Phase 4: Frontend Features
+  └── Home, browse, search, details pages
+
+Phase 5: Watchlist Integration
+  └── Connect frontend to watchlist API
+
+Phase 6: Polish
+  └── Loading states, error handling, animations
+
+
+================================================================================
+                              TECH STACK
+================================================================================
+
+BACKEND
+-------
+• Java 21 (LTS)
+• Spring Boot 3.3+
+• Spring Web (REST controllers)
+• Spring WebFlux WebClient (non-blocking TMDB calls)
+• Spring Cache (Caffeine)
+• Spring Validation
+• Spring Data JPA + H2/PostgreSQL
+• SpringDoc OpenAPI (Swagger UI)
+• Maven
+
+FRONTEND
+--------
+• Angular 20
+• Angular SSR
+• Angular Signals (state management)
+• RxJS
+
+
+================================================================================
+                              API CREDENTIALS
+================================================================================
+
+TMDB API Key:           0212176496cd96b9aac90bb2edffa5b0
+TMDB Base URL:          https://api.themoviedb.org/3
+TMDB Image Base URL:    https://image.tmdb.org/t/p
+
+Image Sizes:
+  - Poster:    /w185, /w342, /w500, /w780, /original
+  - Backdrop:  /w300, /w780, /w1280, /original
+  - Profile:   /w45, /w185, /h632, /original
+
+
+================================================================================
+                                 NOTES
+================================================================================
+
+• Never commit API keys to Git - use environment variables
+• TMDB requires attribution for any images/data used
+• Rate limiting: Be mindful of API call frequency
+• Cache responses to improve performance and reduce API calls
+
+
+================================================================================
