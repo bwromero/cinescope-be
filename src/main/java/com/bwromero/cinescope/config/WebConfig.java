@@ -11,8 +11,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**") // Allow all API endpoints
                 .allowedOrigins("http://localhost:4200",
-                                "https://cinescope-7570yghl1-bryanromerodev-gmailcoms-projects.vercel.app",
-                                "https://*.vercel.app" ) // Angular default port
+                                "https://cinescope-fe.vercel.app", 
+                                "https://cinescope-7570yghl1-bryanromerodev-gmailcoms-projects.vercel.app")
+                .allowedOriginPatterns("https://*.vercel.app") 
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
