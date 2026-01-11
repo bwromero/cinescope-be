@@ -1,14 +1,13 @@
-# Use an official OpenJDK runtime as a parent image
-FROM eclipse-temurin:17-jdk-alpine
-
-# Set the working directory in the container
+# Stage 1: Build the application
+FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Copy the executable jar file from the target directory
-COPY target/cinescope-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose the port the app runs on
+# Stage 2: Create the runtime image
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/target/cinescope-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]

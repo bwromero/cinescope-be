@@ -9,6 +9,5 @@ Dockerfile
 .mvn
 mvnw
 mvnw.cmd
-pom.xml
 HELP.md
 CINESCOPE_MVP_SPEC.txt
