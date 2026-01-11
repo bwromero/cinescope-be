@@ -1,0 +1,14 @@
+target/
+!.jar
+
+.git
+.gitignore
+Dockerfile
+.dockerignore
+.idea
+.mvn
+mvnw
+mvnw.cmd
+pom.xml
+HELP.md
+CINESCOPE_MVP_SPEC.txt
