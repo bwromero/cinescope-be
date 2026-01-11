@@ -3,8 +3,11 @@ package com.bwromero.cinescope.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @Configuration
 public class TmdbConfig {
@@ -17,19 +20,14 @@ public class TmdbConfig {
 
     @Bean
     public WebClient tmdbWebClient() {
-        return WebClient.builder() // We create the builder manually here
+        return WebClient.builder()
                 .baseUrl(baseUrl)
                 .filter((request, next) -> {
-                    var newUri = UriComponentsBuilder.fromUri(request.url())
+                    URI url = UriComponentsBuilder.fromUri(request.url())
                             .queryParam("api_key", apiKey)
-                            .build()
+                            .build(true)
                             .toUri();
-
-                    var newRequest = org.springframework.web.reactive.function.client.ClientRequest.from(request)
-                            .url(newUri)
-                            .build();
-
-                    return next.exchange(newRequest);
+                    return next.exchange(ClientRequest.from(request).url(url).build());
                 })
                 .build();
     }
