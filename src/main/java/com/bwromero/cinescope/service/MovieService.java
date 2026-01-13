@@ -30,7 +30,7 @@ public class MovieService {
     }
 
     public Mono<List<MovieDto>> getNowPlayingMovies(int page) {
-        return fetchMovieList("/movie/now-playing", page);
+        return fetchMovieList("/movie/now_playing", page);
     }
 
     public Mono<List<MovieDto>> getUpcomingMovies(int page) {
@@ -38,7 +38,7 @@ public class MovieService {
     }
 
     public Mono<List<MovieDto>> getTopRatedMovies(int page) {
-        return fetchMovieList("/movie/top-rated", page);
+        return fetchMovieList("/movie/top_rated", page);
     }
 
     public Mono<List<MovieDto>> getPopularMovies(int page) {
