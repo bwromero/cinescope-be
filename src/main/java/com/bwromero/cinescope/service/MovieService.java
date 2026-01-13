@@ -29,15 +29,20 @@ public class MovieService {
                 .map(GenreResponse::genres);
     }
 
+    public Mono<List<MovieDto>> getNowPlayingMovies(int page) {
+        return fetchMovieList("/movie/now-playing", page);
+    }
+
+    public Mono<List<MovieDto>> getUpcomingMovies(int page) {
+        return fetchMovieList("/movie/upcoming", page);
+    }
+
+    public Mono<List<MovieDto>> getTopRatedMovies(int page) {
+        return fetchMovieList("/movie/top-rated", page);
+    }
+
     public Mono<List<MovieDto>> getPopularMovies(int page) {
-        return tmdbWebClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/movie/popular")
-                        .queryParam("page", page)
-                        .build())
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<TmdbResponse<MovieDto>>() {})
-                .map(TmdbResponse::results);
+        return fetchMovieList("/movie/popular", page);
     }
 
     public Mono<List<MovieDto>> searchMovies(String query) {
@@ -64,6 +69,17 @@ public class MovieService {
     public Mono<List<MovieDto>> getTrendingMovies() {
         return tmdbWebClient.get()
                 .uri("/trending/movie/week")
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<TmdbResponse<MovieDto>>() {})
+                .map(TmdbResponse::results);
+    }
+
+    private Mono<List<MovieDto>> fetchMovieList(String path, int page) {
+        return tmdbWebClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(path)
+                        .queryParam("page", page)
+                        .build())
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<TmdbResponse<MovieDto>>() {})
                 .map(TmdbResponse::results);

@@ -24,6 +24,18 @@ public class MovieController {
         return movieService.getTrendingMovies();
     }
 
+    @GetMapping("/movies/now-playing")
+    public Mono<List<MovieDto>> getNowPlaying(@RequestParam(defaultValue = "1") int page) {
+        return movieService.getNowPlayingMovies(page);}
+
+    @GetMapping("/movies/top-rated")
+    public Mono<List<MovieDto>> getUpcoming(@RequestParam(defaultValue = "1") int page) {
+        return movieService.getUpcomingMovies(page);}
+
+    @GetMapping("/top-rated")
+    public Mono<List<MovieDto>> getTopRated(@RequestParam(defaultValue = "1") int page) {
+        return movieService.getTopRatedMovies(page);
+    }
     @GetMapping("/popular")
     public Mono<List<MovieDto>> getPopular(@RequestParam(defaultValue = "1") int page) {
         return movieService.getPopularMovies(page);
