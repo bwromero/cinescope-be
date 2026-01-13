@@ -24,7 +24,16 @@ public class WatchlistItem {
 
     private String title;
     private String posterPath;
+    private String backdropPath;
+    
+    @Column(length = 2000)
+    private String synopsis;
+    
     private Double rating;
+    private Integer voteCount;
+    private Integer runtime;
+    private String tagline;
+    private String releaseDate;
 
     private LocalDateTime addedAt;
 
