@@ -2,6 +2,8 @@ package com.bwromero.cinescope.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
+import java.util.List;
+
 public record MovieDto(
     Long id,
     String title,
@@ -13,5 +15,11 @@ public record MovieDto(
     @JsonAlias("vote_count") Integer voteCount,
     Integer runtime,
     String tagline,
-    String status
-) {}
+    String status,
+    List<GenreDto> genres,
+    @JsonAlias("genre_ids") List<Integer> genreIds, // Add this to catch IDs from the list endpoints
+    VideoResponse videos
+) {
+    public record VideoResponse(List<VideoDto> results) {}
+
+}

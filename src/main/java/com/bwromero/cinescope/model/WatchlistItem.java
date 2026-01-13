@@ -34,6 +34,9 @@ public class WatchlistItem {
     private Integer runtime;
     private String tagline;
     private String releaseDate;
+    private String genres;
+    private String youtubeTrailerKey; // ADD THIS LINE
+
 
     private LocalDateTime addedAt;
 

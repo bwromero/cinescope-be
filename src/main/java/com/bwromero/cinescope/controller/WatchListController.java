@@ -1,5 +1,6 @@
 package com.bwromero.cinescope.controller;
 
+import com.bwromero.cinescope.dto.MovieDto;
 import com.bwromero.cinescope.model.WatchlistItem;
 import com.bwromero.cinescope.service.WatchlistService;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,10 @@ public class WatchListController {
     public List<WatchlistItem> getWatchList(){
         return watchlistService.getWatchList();
     }
+    
     @PostMapping
-    public WatchlistItem add(@RequestBody WatchlistItem item) {
-        return watchlistService.addToWatchlist(item);
+    public WatchlistItem add(@RequestBody MovieDto movieDto) {
+        return watchlistService.addToWatchlist(movieDto);
     }
 
     @DeleteMapping("/{movieId}")

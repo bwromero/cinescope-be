@@ -53,7 +53,10 @@ public class MovieService {
 
     public Mono<MovieDto> getMovieDetails(Long id) {
         return tmdbWebClient.get()
-                .uri("/movie/{id}", id)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/movie/{id}")
+                        .queryParam("append_to_response", "videos") // Get trailer in one request!
+                        .build(id))
                 .retrieve()
                 .bodyToMono(MovieDto.class);
     }
