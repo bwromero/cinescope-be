@@ -45,7 +45,14 @@ public class WatchlistService {
         WatchlistItem item = WatchlistItem.builder()
                 .movieId(dto.id())
                 .title(dto.title())
-                // ... other fields ...
+                .synopsis(dto.synopsis())
+                .posterPath(dto.posterPath())
+                .backdropPath(dto.backdropPath())
+                .releaseDate(dto.releaseDate())
+                .rating(dto.rating())
+                .voteCount(dto.voteCount())
+                .runtime(dto.runtime())
+                .tagline(dto.tagline())
                 .youtubeTrailerKey(trailerKey)
                 .genres(genreNames)
                 .build();
