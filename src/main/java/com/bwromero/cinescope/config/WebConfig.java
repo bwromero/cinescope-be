@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**") // Allow all API endpoints
+        registry.addMapping("/api/**")
                 .allowedOrigins("http://localhost:4200",
                                 "https://cinescope-fe.app",
                                 "https://cinescope-7570yghl1-bryanromerodev-gmailcoms-projects.vercel.app")

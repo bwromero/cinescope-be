@@ -17,7 +17,7 @@ public record MovieDto(
     String tagline,
     String status,
     List<GenreDto> genres,
-    @JsonAlias("genre_ids") List<Integer> genreIds, // Add this to catch IDs from the list endpoints
+    @JsonAlias("genre_ids") List<Integer> genreIds,
     VideoResponse videos
 ) {
     public record VideoResponse(List<VideoDto> results) {}

@@ -1,8 +1,3 @@
-# fly.toml app configuration file generated for cinescope-be-i419ma on 2026-01-11T22:22:59Z
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = 'cinescope-be-i419ma'
 primary_region = 'fra'
 

@@ -60,7 +60,7 @@ public class MovieService {
         return tmdbWebClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/movie/{id}")
-                        .queryParam("append_to_response", "videos") // Get trailer in one request!
+                        .queryParam("append_to_response", "videos")
                         .build(id))
                 .retrieve()
                 .bodyToMono(MovieDto.class);
