@@ -5,9 +5,11 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Stage 2: Create the runtime image
-FROM eclipse-temurin:17-jdk-alpine
+# Stage 2: Create the runtime image (Matching your Java version)
+FROM eclipse-temurin:25-jdk-alpine
 WORKDIR /app
 COPY --from=build /app/target/cinescope-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# The -XX:+UseContainerSupport and -Xmx flags help keep Java inside the Fly.io memory limits
+ENTRYPOINT ["java", "-Xmx768m", "-jar", "app.jar"]
